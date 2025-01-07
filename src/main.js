@@ -44,6 +44,7 @@ const weatherData = {
 };
 
 // Non-NPM
+console.log(weatherData.current.time);
 console.log(weatherData.current.temperature2m);
 console.log(weatherData.current.apparentTemperature);
 console.log(weatherData.current.windSpeed10m);
@@ -61,22 +62,43 @@ console.log(realWindSpeed);
 // Display weather data dynamically
 const temperatureField = document.querySelector("#temperatureField");
 
+// Current Time
+const currentTime = document.createElement("p");
+currentTime.textContent = weatherData.current.time;
+
 // Current Temperature
+const currentTemperatureTitle = document.createElement("p");
+currentTemperatureTitle.textContent = "Temperature:";
 const currentTemperature = document.createElement("p");
 currentTemperature.textContent = `Temperature: ${realTemperature}°C`;
-temperatureField.append(currentTemperature);
+if (realTemperature >= 0) {
+  currentTemperature.classList = "aboveZero";
+} else {
+  currentTemperature.classList = "belowZero";
+}
 
 // Apparent Temperature
 const apparentTemperature = document.createElement("p");
 apparentTemperature.textContent = `Feels Like: ${realFeelsTemperature}°C`;
-temperatureField.append(apparentTemperature);
+if (realFeelsTemperature >= 0) {
+  apparentTemperature.classList = "aboveZero";
+} else {
+  apparentTemperature.classList = "belowZero";
+}
 
 // Wind Speed
 const windSpeed = document.createElement("p");
 windSpeed.textContent = `Wind Speed: ${realWindSpeed} km/h`;
-temperatureField.append(windSpeed);
 
 // Wind Direction
 const windDirection = document.createElement("p");
 windDirection.textContent = `Wind Direction: ${weatherData.current.windDirection10m}°`;
-temperatureField.append(windDirection);
+
+// Append
+temperatureField.append(
+  currentTime,
+  currentTemperature,
+  apparentTemperature,
+  windSpeed,
+  windDirection
+);
