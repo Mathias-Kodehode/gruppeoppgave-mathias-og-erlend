@@ -12,6 +12,7 @@ const params = {
   timezone: "Europe/Berlin",
   forecast_days: 1,
 };
+
 const url = "https://api.open-meteo.com/v1/forecast";
 const responses = await fetchWeatherApi(url, params);
 
@@ -47,7 +48,26 @@ console.log(weatherData.current.temperature2m);
 console.log(weatherData.current.apparentTemperature);
 console.log(weatherData.current.windSpeed10m);
 console.log(weatherData.current.windDirection10m);
+
+// Display weather data dynamically
 const temperatureField = document.querySelector("#temperatureField");
+
+// Current Temperature
 const currentTemperature = document.createElement("p");
-currentTemperature.textContent = `${weatherData.current.temperature2m}°C`;
+currentTemperature.textContent = `Temperature: ${weatherData.current.temperature2m}°C`;
 temperatureField.append(currentTemperature);
+
+// Apparent Temperature
+const apparentTemperature = document.createElement("p");
+apparentTemperature.textContent = `Feels Like: ${weatherData.current.apparentTemperature}°C`;
+temperatureField.append(apparentTemperature);
+
+// Wind Speed
+const windSpeed = document.createElement("p");
+windSpeed.textContent = `Wind Speed: ${weatherData.current.windSpeed10m} km/h`;
+temperatureField.append(windSpeed);
+
+// Wind Direction
+const windDirection = document.createElement("p");
+windDirection.textContent = `Wind Direction: ${weatherData.current.windDirection10m}°`;
+temperatureField.append(windDirection);
