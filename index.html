@@ -1,13 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div class="weather-container">
+      <header>
+        <h1>Weather in Your City</h1>
+      </header>
+      <div class="weather-info">
+        <div class="temperature">25°C</div>
+        <div class="details">
+          <p>Sunny</p>
+          <p>Humidity: 40%</p>
+          <p>Wind: 10 km/h</p>
+        </div>
+      </div>
+      <footer>
+        <p>Updated: 3:00 PM</p>
+      </footer>
+    </div>
   </body>
 </html>
