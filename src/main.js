@@ -1,40 +1,42 @@
-import "./style.css";
-import javascriptLogo from "./javascript.svg";
-import viteLogo from "/vite.svg";
-import { setupCounter } from "./counter.js";
-import { compareAsc, format } from "date-fns";
+import { fetchWeatherApi } from "openmeteo";
 
-format(new Date(2014, 1, 11), "yyyy-MM-dd");
-//=> '2014-02-11'
+const params = {
+  latitude: 63.1105,
+  longitude: 7.7279,
+  current: "temperature_2m",
+  timezone: "Europe/Berlin",
+  forecast_days: 1,
+};
+const url = "https://api.open-meteo.com/v1/forecast";
+const responses = await fetchWeatherApi(url, params);
 
-const dates = [
-  new Date(1995, 6, 2),
-  new Date(1987, 1, 11),
-  new Date(1989, 6, 10),
-];
-console.log(dates.sort(compareAsc));
-//=> [
-//   Wed Feb 11 1987 00:00:00,
-//   Mon Jul 10 1989 00:00:00,
-//   Sun Jul 02 1995 00:00:00
-// ]
+// Helper function to form time ranges
+const range = (start, stop, step) =>
+  Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
 
-document.querySelector("#app").innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`;
+// Process first location. Add a for-loop for multiple locations or weather models
+const response = responses[0];
 
-setupCounter(document.querySelector("#counter"));
+// Attributes for timezone and location
+const utcOffsetSeconds = response.utcOffsetSeconds();
+const timezone = response.timezone();
+const timezoneAbbreviation = response.timezoneAbbreviation();
+const latitude = response.latitude();
+const longitude = response.longitude();
+
+const current = response.current();
+
+// Note: The order of weather variables in the URL query and the indices below need to match!
+const weatherData = {
+  current: {
+    time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+    temperature2m: current.variables(0).value(),
+  },
+};
+
+// Non-NPM
+console.log(weatherData.current.temperature2m);
+const temperatureField = document.querySelector("#temperatureField");
+const currentTemperature = document.createElement("p");
+currentTemperature.textContent = `${weatherData.current.temperature2m}°C`;
+temperatureField.append(currentTemperature);
