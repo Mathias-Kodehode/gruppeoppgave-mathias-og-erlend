@@ -3,7 +3,12 @@ import { fetchWeatherApi } from "openmeteo";
 const params = {
   latitude: 63.1105,
   longitude: 7.7279,
-  current: "temperature_2m",
+  current: [
+    "temperature_2m",
+    "apparent_temperature",
+    "wind_speed_10m",
+    "wind_direction_10m",
+  ],
   timezone: "Europe/Berlin",
   forecast_days: 1,
 };
@@ -31,11 +36,17 @@ const weatherData = {
   current: {
     time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
     temperature2m: current.variables(0).value(),
+    apparentTemperature: current.variables(1).value(),
+    windSpeed10m: current.variables(2).value(),
+    windDirection10m: current.variables(3).value(),
   },
 };
 
 // Non-NPM
 console.log(weatherData.current.temperature2m);
+console.log(weatherData.current.apparentTemperature);
+console.log(weatherData.current.windSpeed10m);
+console.log(weatherData.current.windDirection10m);
 const temperatureField = document.querySelector("#temperatureField");
 const currentTemperature = document.createElement("p");
 currentTemperature.textContent = `${weatherData.current.temperature2m}°C`;
