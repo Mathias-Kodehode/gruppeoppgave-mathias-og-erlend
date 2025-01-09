@@ -401,3 +401,5 @@ temperatureField.append(
   windSpeed,
   windDirection
 );
+
+console.log("Test pages");
