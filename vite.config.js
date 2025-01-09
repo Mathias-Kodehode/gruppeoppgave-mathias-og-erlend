@@ -5,4 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   //   plugins: [react()],
   base: "/gruppeoppgave-mathias-og-erlend/",
+  build: {
+    target: "esnext", //browsers can handle the latest ES features
+  },
 });
