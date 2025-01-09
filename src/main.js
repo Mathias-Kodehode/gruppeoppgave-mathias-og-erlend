@@ -168,7 +168,7 @@ if (weatherData.current.weatherCode == 0) {
     "Precipitation within sight, reaching the ground or the surface of the sea, near to, but not at the station";
 } else if (weatherData.current.weatherCode == 17) {
   weatherCode.textContent =
-    "Thunderstorm, but no precipitation at the time of observation ";
+    "Thunderstorm, but no precipitation at the time of observation";
 } else if (weatherData.current.weatherCode == 18) {
   weatherCode.textContent =
     "Squalls at or within sight of the station during the preceding hour or at the time of observation";
